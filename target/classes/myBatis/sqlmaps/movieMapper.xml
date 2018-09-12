@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="Movie">
+    
+    <!-- OUT CURSOR TYPE을 받기 위한 Map 설정  -->
+	<resultMap id="movieMap" type="com.spring.movie.vo.MovieVo">
+	 <result property="movie_id"  column="MOVIE_ID"  javaType="String"/>
+	 <result property="title"     column="TITLE"     javaType="String"/>
+	</resultMap>
+	
+	<resultMap id="movieTimeMap" type="com.spring.movietime.vo.MovieTimeVo">
+	 <result property="time_id"   column="TIME_ID"  javaType="String"/>
+	 <result property="movie_id"  column="MOVIE_ID"  javaType="String"/>
+	 <result property="sc_id"     column="SC_ID"     javaType="String"/>
+	 <result property="sc_num"    column="SC_NUM"    javaType="int"/>
+	 <result property="m_s_time"  column="M_S_TIME"  javaType="String"/>
+	 <result property="m_f_time"  column="M_F_TIME"  javaType="String"/>
+	 <result property="sc_name"   column="SC_NAME"   javaType="String"/>
+	</resultMap>
+
+    
+    <select id="MovieList" statementType="CALLABLE" parameterType="hashmap"
+	  resultType="com.spring.movie.vo.MovieVo"><!-- result:O_CUR타입 -->
+		{CALL PKG_MOVIE.PROC_MOVIE_LIST(
+			#{result, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=movieMap}	
+		)}
+	</select>
+	
+	<select id="MovieTimeList" statementType="CALLABLE" parameterType="hashmap"
+	  resultType="com.spring.movietime.vo.MovieTimeVo">
+		{CALL PKG_MOVIE.PROC_MOVIE_TIME_LIST(
+			#{movie_id, mode=IN, jdbcType=VARCHAR},
+			#{result,   mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=movieTimeMap}	
+		)}
+	</select>
+	
+    
+    </mapper>

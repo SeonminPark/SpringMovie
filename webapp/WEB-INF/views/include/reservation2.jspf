@@ -1,0 +1,102 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<script>
+
+	window.onload = function(){
+		
+ 		$('.menusSpan').click( function(){
+			location.href="/Movie/Reservation?menu_name=" + $(this).html();
+		}); 
+		
+ 		$('.notReaserveA').click(function(){
+ 			
+ 		});
+/*  		$('#screens').click( function(){
+ 			
+ 		});
+ 		 */
+ 		/* $('#screens"). = function(){
+			var movieId = title.value;
+			$('#time').html('');
+			console.log(movieId);
+			$("<option></option>").appendTo('#time').text('시간을 선택하세요');
+			
+ 			$.ajax({
+				url      : '/Movie/MovieTime',
+				method   : 'POST',
+				data     : {movie_id : movieId},
+				dataType : "JSON", 
+				type     :  'text',
+				success  : function(data){
+					$.each(data, function(key, value){
+					$("<option></option>").appendTo('#time').val(value.sc_id+","+value.sc_num).text(value.m_s_time+" ("+value.sc_name +")");
+					});
+			     }
+			});
+		}	 */
+		
+	}
+</script>
+
+<body>
+
+	<div id="reservationWrap">
+		<input type="hidden" value="${movie_id}" id="movie_id"/>
+		<input type="hidden" value="${sc_id}"    id="sc_id" />
+		<input type="hidden" value="${sc_num}"   id="sc_num" />
+		<input type="hidden" value="${r_num}"    id="r_num" />
+		<div class="reservationDiv" id="screens">
+			<h4>스크린배치도</h4>
+			<div id="screenImgDiv">
+				<img src="/resources/img/screen.jpg" id="screenImg"/>
+			</div>
+				<c:forEach var="seats" items="${seatsList}">
+					<c:choose>
+						<c:when test="${seats.seat_grp eq 'A'}">
+							<c:choose>
+								<c:when test="${seats.r_ch eq 'N'}">
+									<div class="notReaserveA" >${seats.seat_id}</div>
+								</c:when>
+								<c:otherwise>
+									<div class="reaserveA" >${seats.seat_id}</div>
+								</c:otherwise>
+							</c:choose>
+						</c:when>
+						<c:when test="${seats.seat_grp eq 'B'}">
+							<c:choose>
+								<c:when test="${seats.r_ch eq 'N'}">
+									<div class="notReaserveB" >${seats.seat_id}</div>
+								</c:when>
+								<c:otherwise>
+									<div class="reaserveB" >${seats.seat_id}</div>
+								</c:otherwise>
+							</c:choose>
+						</c:when>
+						<c:otherwise>
+							<c:choose>
+								<c:when test="${seats.r_ch eq 'N'}">
+									<div class="notReaserveC" >${seats.seat_id}</div>
+								</c:when>
+								<c:otherwise>
+									<div class="reaserveC" >${seats.seat_id}</div>
+								</c:otherwise>
+							</c:choose>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+		</div>
+	</div>
+
+</body>
+</html>

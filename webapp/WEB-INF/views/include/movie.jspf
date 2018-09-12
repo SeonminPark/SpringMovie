@@ -1,0 +1,20 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+
+<!-- <script src="resources/js/WriteForm.js"></script> -->
+</head>
+<body>
+	<div id="movieImgDiv">
+		<img src="/resources/img/torr.jpg"     class="movieImg"/>
+		<img src="/resources/img/eternal.JPG"  class="movieImg"/>
+		<img src="/resources/img/lalaland.JPG" class="movieImg"/>
+		<img src="/resources/img/super.JPG"    class="movieImg"/>	
+	</div>
+</body>
+</html>

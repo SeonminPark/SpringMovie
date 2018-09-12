@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+   <mapper namespace="Menus">
+   
+   	<!-- OUT CURSOR TYPE을 받기 위한 Map 설정  -->
+	<resultMap id="menusMap" type="com.spring.menu.vo.MenusVo">
+	 <result property="menu_id"     column="MENU_ID"     javaType="String"/>
+	 <result property="menu_name"   column="MENU_NAME"   javaType="String"/>
+	 <result property="menu_seq"    column="MENU_SEQ"    javaType="int"/>
+	</resultMap>
+
+
+	<select id="MenuList" statementType="CALLABLE" parameterType="hashmap"
+	  resultType="com.spring.menu.vo.MenusVo"><!-- result:O_CUR타입 -->
+		{CALL PKG_MOVIE.PROC_MENUS_LIST(
+			#{result, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=menusMap}	
+		)}
+	</select>
+
+   
+   
+   </mapper>

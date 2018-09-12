@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="Screen">
+    <!-- OUT CURSOR TYPE을 받기 위한 Map 설정  -->
+	<resultMap id="seatsMap" type="com.spring.seats.vo.ScreensSeatsVo">
+	 <result property="time_id"   column="TIME_ID"  javaType="String"/>
+	 <result property="seat_id"   column="SEAT_ID"  javaType="String"/>
+	 <result property="r_ch"      column="R_CH"     javaType="String"/>
+	 <result property="seat_grp"  column="SEAT_GRP" javaType="String"/>
+	</resultMap>
+    
+    <select id="SeatsList" statementType="CALLABLE" parameterType="hashmap"
+	  resultType="com.spring.seats.vo.ScreensSeatsVo">
+    	{CALL PKG_SCREENS.PROC_SCREENS_SEATS_LIST(
+			#{movie_id, mode=IN, jdbcType=VARCHAR},
+			#{sc_id, mode=IN, jdbcType=VARCHAR},
+			#{sc_num, mode=IN, jdbcType=INTEGER,javaType=string},
+			#{result,   mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=seatsMap}	
+		)}
+    </select>
+    </mapper>
