@@ -106,6 +106,14 @@ public class PdsController {
 		mv.setViewName("/movie/reservationMain2");
 		return mv;
 	}
+	
+	@RequestMapping("/Movie/ReservationOk")
+	public ModelAndView reservationOk(@RequestParam HashMap<String,Object> map) {
+		
+		
+		
+		return null;
+	}
 
 
 }

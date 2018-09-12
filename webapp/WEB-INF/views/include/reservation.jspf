@@ -34,7 +34,7 @@
 				method   : 'POST',
 				data     : {movie_id : movieId},
 				dataType : "JSON", 
-				type     :  'text',
+				type     : 'text',
 				success  : function(data){
 					$.each(data, function(key, value){
 					$("<option></option>").appendTo('#time').val(value.sc_id+","+value.sc_num).text(value.m_s_time+" ("+value.sc_name +")");

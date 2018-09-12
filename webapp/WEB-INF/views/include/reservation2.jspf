@@ -18,10 +18,63 @@
  		$('.menusSpan').click( function(){
 			location.href="/Movie/Reservation?menu_name=" + $(this).html();
 		}); 
-		
- 		$('.notReaserveA').click(function(){
+ 		
+ 		var r_num    = document.getElementById('r_num').value;
+ 		var movie_id = document.getElementById('movie_id').value;
+ 		var sc_id    = document.getElementById('sc_id').value;
+ 		var sc_num   = document.getElementById('sc_num').value;
+
+		console.log($('.emptySeat'));
+ 		
+ 		$('.emptySeat').click(function(e){
+
+			var count = 0;
+			/*$(this).css({"background-color":"black",
+ 			"color":"yellow"} ); */ 
  			
+ 			for(var i=0; i<$('.emptySeat').size(); i++){
+ 				if($('.emptySeat').eq(i).hasClass('active')){
+ 					count++;
+ 				};
+ 			}
+ 			
+ 			console.log(count);
+ 			
+ 			
+			if($(this).hasClass('active')){
+				$(this).removeClass('active');
+			}else{
+				if(count >= r_num){
+	 				return;
+	 			}
+	 			$(this).addClass('active');
+			}
  		});
+ 		
+ 		
+ 		var reservationImg = document.getElementById('reservationImg');
+ 		
+ 		reservationImg.onclick = function(){
+ 			
+ 			var count = 0;
+ 			
+ 			for(var i=0; i<$('.emptySeat').size(); i++){
+ 				if($('.emptySeat').eq(i).hasClass('active')){
+ 					count++;
+ 				};
+ 			}
+ 			
+ 			if(count < r_num){
+ 				alert("좌석을 인원수에 맞게 선택해주세요.");
+ 				return;
+ 			}else{
+	 			location.href="/Movie/ReservationOk?menu_name=" + r_num + "&move_id=" + movie_id + "&sc_id=" + sc_id + "&sc_num=" + sc_num + "&r_num=" + r_num;
+	 			console.log('클릭됐다');		
+ 			}
+ 		}
+ 		
+ 		
+ 		
 /*  		$('#screens').click( function(){
  			
  		});
@@ -56,45 +109,65 @@
 		<input type="hidden" value="${sc_id}"    id="sc_id" />
 		<input type="hidden" value="${sc_num}"   id="sc_num" />
 		<input type="hidden" value="${r_num}"    id="r_num" />
-		<div class="reservationDiv" id="screens">
+		<div class="screens">
 			<h4>스크린배치도</h4>
 			<div id="screenImgDiv">
 				<img src="/resources/img/screen.jpg" id="screenImg"/>
 			</div>
-				<c:forEach var="seats" items="${seatsList}">
-					<c:choose>
-						<c:when test="${seats.seat_grp eq 'A'}">
-							<c:choose>
-								<c:when test="${seats.r_ch eq 'N'}">
-									<div class="notReaserveA" >${seats.seat_id}</div>
-								</c:when>
-								<c:otherwise>
-									<div class="reaserveA" >${seats.seat_id}</div>
-								</c:otherwise>
-							</c:choose>
-						</c:when>
-						<c:when test="${seats.seat_grp eq 'B'}">
-							<c:choose>
-								<c:when test="${seats.r_ch eq 'N'}">
-									<div class="notReaserveB" >${seats.seat_id}</div>
-								</c:when>
-								<c:otherwise>
-									<div class="reaserveB" >${seats.seat_id}</div>
-								</c:otherwise>
-							</c:choose>
-						</c:when>
-						<c:otherwise>
-							<c:choose>
-								<c:when test="${seats.r_ch eq 'N'}">
-									<div class="notReaserveC" >${seats.seat_id}</div>
-								</c:when>
-								<c:otherwise>
-									<div class="reaserveC" >${seats.seat_id}</div>
-								</c:otherwise>
-							</c:choose>
-						</c:otherwise>
-					</c:choose>
-				</c:forEach>
+			
+			<div class="seatSection">
+				<div class="flex">
+					<c:forEach var="seats" items="${seatsList}">
+						<c:choose>
+							<c:when test="${seats.seat_grp eq 'A'}">
+								<c:choose>
+									<c:when test="${seats.r_ch eq 'N'}">
+										<div class="emptySeat" >${seats.seat_id}</div>
+									</c:when>
+									<c:otherwise>
+										<div class="regSeat"  >${seats.seat_id}</div>
+									</c:otherwise>
+								</c:choose>
+							</c:when>
+						</c:choose>
+					</c:forEach>
+				</div>
+				<div class="flex">
+					<c:forEach var="seats" items="${seatsList}">
+						<c:choose>
+							<c:when test="${seats.seat_grp eq 'B'}">
+								<c:choose>
+									<c:when test="${seats.r_ch eq 'N'}">
+										<div class="emptySeat" >${seats.seat_id}</div>
+									</c:when>
+									<c:otherwise>
+										<div class="regSeat" >${seats.seat_id}</div>
+									</c:otherwise>
+								</c:choose>
+							</c:when>
+						</c:choose>
+					</c:forEach>
+				</div>
+				<div class="flex">
+					<c:forEach var="seats" items="${seatsList}">
+						<c:choose>
+							<c:when test="${seats.seat_grp eq 'C'}">
+								<c:choose>
+									<c:when test="${seats.r_ch eq 'N'}">
+										<div class="emptySeat" >${seats.seat_id}</div>
+									</c:when>
+									<c:otherwise>
+										<div class="regSeat" >${seats.seat_id}</div>
+									</c:otherwise>
+								</c:choose>
+							</c:when>
+						</c:choose>
+					</c:forEach>
+				</div>
+			</div>
+		</div>
+		<div class="reservationImgDiv">
+			<img src="/resources/img/reservation.png" id="reservationImg"/>
 		</div>
 	</div>
 
